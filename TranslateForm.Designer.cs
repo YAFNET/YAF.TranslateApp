@@ -45,7 +45,6 @@ namespace YAF.TranslateApp
             this.progressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.checkPendingOnly = new System.Windows.Forms.CheckBox();
-            this.btnAutoTranslate = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -93,8 +92,8 @@ namespace YAF.TranslateApp
             // 
             // tbxSourceTranslationFile
             // 
-            this.tbxSourceTranslationFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbxSourceTranslationFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tbxSourceTranslationFile.Location = new System.Drawing.Point(12, 25);
             this.tbxSourceTranslationFile.Name = "tbxSourceTranslationFile";
             this.tbxSourceTranslationFile.ReadOnly = true;
@@ -103,8 +102,8 @@ namespace YAF.TranslateApp
             // 
             // tbxDestinationTranslationFile
             // 
-            this.tbxDestinationTranslationFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbxDestinationTranslationFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tbxDestinationTranslationFile.Location = new System.Drawing.Point(12, 64);
             this.tbxDestinationTranslationFile.Name = "tbxDestinationTranslationFile";
             this.tbxDestinationTranslationFile.ReadOnly = true;
@@ -145,9 +144,9 @@ namespace YAF.TranslateApp
             // 
             // panel1
             // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.grid1);
             this.panel1.Location = new System.Drawing.Point(12, 109);
@@ -157,9 +156,9 @@ namespace YAF.TranslateApp
             // 
             // grid1
             // 
-            this.grid1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.grid1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.grid1.EnableSort = true;
             this.grid1.Location = new System.Drawing.Point(3, 3);
             this.grid1.Name = "grid1";
@@ -214,24 +213,11 @@ namespace YAF.TranslateApp
             this.checkPendingOnly.UseVisualStyleBackColor = true;
             this.checkPendingOnly.CheckedChanged += new System.EventHandler(this.CheckPendingOnlyCheckedChanged);
             // 
-            // btnAutoTranslate
-            // 
-            this.btnAutoTranslate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAutoTranslate.Enabled = false;
-            this.btnAutoTranslate.Location = new System.Drawing.Point(527, 622);
-            this.btnAutoTranslate.Name = "btnAutoTranslate";
-            this.btnAutoTranslate.Size = new System.Drawing.Size(139, 23);
-            this.btnAutoTranslate.TabIndex = 16;
-            this.btnAutoTranslate.Text = "Auto Translate Pending ";
-            this.btnAutoTranslate.UseVisualStyleBackColor = true;
-            this.btnAutoTranslate.Click += new System.EventHandler(this.AutoTranslateAll);
-            // 
             // TranslateForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(880, 673);
-            this.Controls.Add(this.btnAutoTranslate);
             this.Controls.Add(this.checkPendingOnly);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.btnPopulateTranslations);
@@ -248,7 +234,7 @@ namespace YAF.TranslateApp
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(896, 711);
             this.Name = "TranslateForm";
-            this.Text = "YAF Translation 1.10";
+            this.Text = "YAF Translation 1.20";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TranslateFormFormClosing);
             this.Load += new System.EventHandler(this.TranslateForm_Load);
             this.panel1.ResumeLayout(false);

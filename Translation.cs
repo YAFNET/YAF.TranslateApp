@@ -31,22 +31,26 @@ namespace YAF.TranslateApp
     {
         #region Constants and Fields
         
-        ///<summary>
-        /// Resource Page Name
-        ///</summary>
-        public string sPageName { get; set; }
-        ///<summary>
-        /// Resource Name
-        ///</summary>
-        public string sResourceName { get; set; }
-        ///<summary>
-        /// Resource Original Value
-        ///</summary>
-        public string sResourceValue { get; set; }
-        ///<summary>
-        /// Resource Localized Value
-        ///</summary>
-        public string sLocalizedValue { get; set; }
+        /// <summary>
+        /// Gets or sets the Resource Page Name
+        /// </summary>
+        public string PageName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Resource Name
+        /// </summary>
+        public string ResourceName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Resource Original Value
+        /// </summary>
+        public string ResourceValue { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Resource Localized Value
+        /// </summary>
+        public string LocalizedValue { get; set; }
+
         #endregion
     }
 }

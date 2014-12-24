@@ -22,22 +22,26 @@
  * under the License.
  */
 
-
-using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using System.Xml;
-using System.Xml.XPath;
-using SourceGrid;
-using SourceGrid.Cells.Views;
-using BorderStyle = System.Windows.Forms.BorderStyle;
-
 namespace YAF.TranslateApp
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.Specialized;
+    using System.Drawing;
+    using System.Linq;
+    using System.Text;
+    using System.Windows.Forms;
+    using System.Xml;
+    using System.Xml.XPath;
+
+    using SourceGrid;
+    using SourceGrid.Cells.Views;
+
+    using BorderStyle = System.Windows.Forms.BorderStyle;
+
+    /// <summary>
+    /// 
+    /// </summary>
     public partial class TranslateForm : Form
     {
         #region Private instance variables
@@ -289,6 +293,7 @@ namespace YAF.TranslateApp
         {
             btnSave.Enabled = true;
         }
+
         /// <summary>
         /// Auto Translate The Selected Resource via Google Translator
         /// </summary>
@@ -304,8 +309,6 @@ namespace YAF.TranslateApp
             TextBox tbx = (TextBox)contextMenu.SourceControl;
             TextBoxTranslation tbt = (TextBoxTranslation)tbx.Tag;
 
-            tbx.Text = Translator.TranslateText(tbx.Text, string.Format("{0}|{1}", sLangCodeSrc, sLangCodeDest));
-
             RangeRegion region = grid1.Selection.GetSelectionRegion();
             PositionCollection poss = region.GetCellsPositions();
 
@@ -317,8 +320,8 @@ namespace YAF.TranslateApp
 
             // Update Translations List
             translations.Find(check =>
-                              check.sPageName.Equals(tbt.pageName) && check.sResourceName.Equals(tbt.resourceName)).
-                sLocalizedValue = tbx.Text;
+                              check.PageName.Equals(tbt.pageName) && check.ResourceName.Equals(tbt.resourceName)).
+                LocalizedValue = tbx.Text;
 
             // tlpTranslations.Focus();
         }
@@ -347,8 +350,8 @@ namespace YAF.TranslateApp
 
             // Update Translations List
             translations.Find(check =>
-                              check.sPageName.Equals(tbt.pageName) && check.sResourceName.Equals(tbt.resourceName)).
-                sLocalizedValue = tbx.Text;
+                              check.PageName.Equals(tbt.pageName) && check.ResourceName.Equals(tbt.resourceName)).
+                LocalizedValue = tbx.Text;
 
             //tlpTranslations.Focus();
 
@@ -617,10 +620,10 @@ namespace YAF.TranslateApp
 
             Translation translation = new Translation
                                           {
-                                              sPageName = pageName,
-                                              sResourceName = resourceName,
-                                              sResourceValue = srcResourceValue,
-                                              sLocalizedValue = dstResourceValue
+                                              PageName = pageName,
+                                              ResourceName = resourceName,
+                                              ResourceValue = srcResourceValue,
+                                              LocalizedValue = dstResourceValue
                                           };
 
             translations.Add(translation);
@@ -769,14 +772,14 @@ namespace YAF.TranslateApp
                 foreach (Translation trans in translations)
                 {
                     // <page></page>
-                    if (!trans.sPageName.Equals(currentPageName, StringComparison.OrdinalIgnoreCase))
+                    if (!trans.PageName.Equals(currentPageName, StringComparison.OrdinalIgnoreCase))
                     {
                         if (!String.IsNullOrEmpty(currentPageName))
                         {
                             xw.WriteFullEndElement();
                         }
 
-                        currentPageName = trans.sPageName;
+                        currentPageName = trans.PageName;
 
                         xw.WriteStartElement("page");
                         xw.WriteAttributeString("name", currentPageName);
@@ -784,8 +787,8 @@ namespace YAF.TranslateApp
                     }
 
                     xw.WriteStartElement("Resource");
-                    xw.WriteAttributeString("tag", trans.sResourceName);
-                    xw.WriteString(trans.sLocalizedValue);
+                    xw.WriteAttributeString("tag", trans.ResourceName);
+                    xw.WriteString(trans.LocalizedValue);
                     xw.WriteFullEndElement();
                 }
 
@@ -832,7 +835,7 @@ namespace YAF.TranslateApp
             }*/
 
             foreach (T item1 in
-                list.Where(item1 => finalList.Find(check => check.sPageName.Equals(item1.sPageName) && check.sResourceName.Equals(item1.sResourceName)) == null))
+                list.Where(item1 => finalList.Find(check => check.PageName.Equals(item1.PageName) && check.ResourceName.Equals(item1.ResourceName)) == null))
             {
                 finalList.Add(item1);
             }
@@ -887,58 +890,10 @@ namespace YAF.TranslateApp
         #endregion
 
         /// <summary>
-        /// Translate all Pending Ressources with Google Translator
+        /// Handles the Load event of the TranslateForm control.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void AutoTranslateAll(object sender, EventArgs e)
-        {
-            progressBar.Maximum = grid1.Rows.Count;
-            progressBar.Minimum = 0;
-
-            progressBar.Value = 0;
-
-            Cursor = Cursors.WaitCursor;
-
-            for (int i = 0; i < grid1.Rows.Count; i++)
-            {
-                progressBar.Value = i;
-
-                if (grid1[i, 2].Editor == null) continue;
-
-                SourceGrid.Cells.Editors.TextBox tbx = (SourceGrid.Cells.Editors.TextBox)grid1[i, 2].Editor;
-
-                TextBoxTranslation tbt = (TextBoxTranslation)tbx.Control.Tag;
-
-                if (!tbx.Control.ForeColor.Equals(Color.Red)) continue;
-
-                tbx.Control.Text = Translator.TranslateText(tbx.Control.Text,
-                                                            string.Format("{0}|{1}", sLangCodeSrc, sLangCodeDest));
-
-                tbx.Control.ForeColor = tbt.srcResourceValue.Equals(tbx.Control.Text, StringComparison.OrdinalIgnoreCase)
-                                            ? Color.Red
-                                            : Color.Black;
-
-                // Update Translations List
-                translations.Find(check =>
-                                  check.sPageName.Equals(tbt.pageName) &&
-                                  check.sResourceName.Equals(tbt.resourceName)).
-                    sLocalizedValue = tbx.Control.Text;
-
-
-                grid1[i, 2].View = tbt.srcResourceValue.Equals(tbx.Control.Text, StringComparison.OrdinalIgnoreCase)
-                                       ? cellLocalResourceRed
-                                       : cellLocalResource;
-
-                grid1[i, 2].Value = tbx.Control.Text;
-            }
-
-            grid1.Update();
-
-
-            Cursor = Cursors.Default;
-        }
-
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void TranslateForm_Load(object sender, EventArgs e)
         {
             checkPendingOnly.Checked = Properties.Settings.Default.ShowPendingOnly;

@@ -22,14 +22,22 @@
  * under the License.
  */
 
-using System;
-using System.Reflection;
-using System.Windows.Forms;
-
 namespace YAF.TranslateApp
 {
+    using System;
+    using System.Reflection;
+    using System.Windows.Forms;
+
+    /// <summary>
+    /// Extension Methods
+    /// </summary>
     public static class ExtensionMethods
     {
+        /// <summary>
+        /// Doubles the buffered.
+        /// </summary>
+        /// <param name="tlp">The TLP.</param>
+        /// <param name="setting">if set to <c>true</c> [setting].</param>
         public static void DoubleBuffered(this TableLayoutPanel tlp, bool setting)
         {
             Type dgvType = tlp.GetType();

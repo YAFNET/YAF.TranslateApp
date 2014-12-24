@@ -22,13 +22,14 @@
  * under the License.
  */
 
-
-using System;
-using System.Windows.Forms;
-using YAF.TranslateApp;
-
 namespace YAF.TranslateApp
 {
+    using System;
+    using System.Windows.Forms;
+
+    /// <summary>
+    /// 
+    /// </summary>
     static class Program
     {
         /// <summary>
