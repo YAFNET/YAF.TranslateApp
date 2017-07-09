@@ -1,7 +1,7 @@
 /* Yet Another Forum.NET
  * Copyright (C) 2003-2005 Bjørnar Henden
  * Copyright (C) 2006-2013 Jaben Cargman
- * Copyright (C) 2014 Ingo Herbote
+ * Copyright (C) 2014-2017 Ingo Herbote
  * http://www.yetanotherforum.net/
  * 
  * Licensed to the Apache Software Foundation (ASF) under one
@@ -40,9 +40,9 @@ namespace YAF.TranslateApp
         /// <param name="setting">if set to <c>true</c> [setting].</param>
         public static void DoubleBuffered(this TableLayoutPanel tlp, bool setting)
         {
-            Type dgvType = tlp.GetType();
+            var dgvType = tlp.GetType();
            
-            PropertyInfo pi = dgvType.GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
+            var pi = dgvType.GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
 
             pi.SetValue(tlp, setting, null);
         }
