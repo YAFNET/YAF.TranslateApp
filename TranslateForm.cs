@@ -1,8 +1,8 @@
 /* Yet Another Forum.NET
  * Copyright (C) 2003-2005 Bjørnar Henden
  * Copyright (C) 2006-2013 Jaben Cargman
- * Copyright (C) 2014-2019 Ingo Herbote
- * http://www.yetanotherforum.net/
+ * Copyright (C) 2014-2021 Ingo Herbote
+ * https://www.yetanotherforum.net/
  * 
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -12,7 +12,7 @@
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
 
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
 
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
@@ -42,34 +42,16 @@ namespace YAF.TranslateApp
     using BorderStyle = System.Windows.Forms.BorderStyle;
 
     /// <summary>
-    /// 
+    /// The translate form.
     /// </summary>
-    /// <seealso cref="System.Windows.Forms.Form" />
     public partial class TranslateForm : Form
     {
         #region Private instance variables
 
-        // Header separator row font style, backing store for property
-
-        // Column 1 (Resource tag) font style, backing store for property
-
-        // List of namespaces for <Resources> in destination translation file, backing store for property
-
-        // List of attributes for <Resources> in destination translation file, backing store for property
-
+        /// <summary>
+        /// The translations.
+        /// </summary>
         private List<Translation> translations = new List<Translation>();
-
-        /// <summary>
-        /// Language Code of the Source 
-        /// Translation File
-        /// </summary>
-        private string sLangCodeSrc;
-
-        /// <summary>
-        /// Language Code of the Destionation 
-        /// Translation File
-        /// </summary>
-        private string sLangCodeDest;
 
         private int RowCount;
 
@@ -80,23 +62,23 @@ namespace YAF.TranslateApp
         /// <summary>
         /// Gets the Header separator row font style
         /// </summary>
-        public Font PageHeaderFont { get; } = new Font(SystemFonts.DefaultFont, FontStyle.Bold);
+        private Font PageHeaderFont { get; } = new Font(SystemFonts.DefaultFont, FontStyle.Bold);
 
         /// <summary>
         /// Gets the Column 1 (Resource tag) font style
         /// </summary>
-        public Font ResourceHeaderFont { get; } = new Font(SystemFonts.DefaultFont, FontStyle.Bold);
+        private Font ResourceHeaderFont { get; } = new Font(SystemFonts.DefaultFont, FontStyle.Bold);
 
         /// <summary>
         /// Destination file changed flag
         /// </summary>
-        public bool DestinationTranslationFileChanged { get; set; }
+        private bool DestinationTranslationFileChanged { get; set; }
 
         // List of namespaces for <Resources> in destination translation file
-        public StringDictionary ResourcesNamespaces { get; } = new StringDictionary();
+        private StringDictionary ResourcesNamespaces { get; } = new StringDictionary();
 
         // List of attributes for <Resources> in destination translation file
-        public StringDictionary ResourcesAttributes { get; } = new StringDictionary();
+        private StringDictionary ResourcesAttributes { get; } = new StringDictionary();
 
         private readonly Cell cellLocalResource;
 
@@ -109,7 +91,7 @@ namespace YAF.TranslateApp
         /// <summary>
         /// Support class for TextBox.Tag property value
         /// </summary>
-        private class TextBoxTranslation
+        private partial class TextBoxTranslation
         {
             public string pageName;
 
@@ -164,7 +146,6 @@ namespace YAF.TranslateApp
             this.PopulateTranslations(this.tbxSourceTranslationFile.Text, this.tbxDestinationTranslationFile.Text);
         }
 
-
         /// <summary>
         /// Load source translation
         /// </summary>
@@ -200,7 +181,6 @@ namespace YAF.TranslateApp
             this.PopulateTranslations(this.tbxSourceTranslationFile.Text, this.tbxDestinationTranslationFile.Text);
         }
 
-
         /// <summary>
         /// Load destination, target, translation
         /// </summary>
@@ -226,7 +206,6 @@ namespace YAF.TranslateApp
             this.PopulateTranslations(this.tbxSourceTranslationFile.Text, this.tbxDestinationTranslationFile.Text);
         }
 
-
         /// <summary>
         /// Exit application
         /// </summary>
@@ -237,7 +216,6 @@ namespace YAF.TranslateApp
             this.Close();
         }
 
-
         /// <summary>
         /// Save translation
         /// </summary>
@@ -246,9 +224,8 @@ namespace YAF.TranslateApp
         void BtnSaveClick(object sender, EventArgs e)
         {
             this.DestinationTranslationFileChanged = false;
-            this.SaveTransalation();
+            this.SaveTranslation();
         }
-
 
         /// <summary>
         /// Check if translation changed and ask to save if changed
@@ -270,7 +247,7 @@ namespace YAF.TranslateApp
                 case DialogResult.No:
                     break;
                 case DialogResult.Yes:
-                    if (!this.SaveTransalation())
+                    if (!this.SaveTranslation())
                     {
                         e.Cancel = true;
                     }
@@ -280,7 +257,6 @@ namespace YAF.TranslateApp
                     break;
             }
         }
-
 
         /// <summary>
         /// Set flag that transaltion has changed
@@ -426,7 +402,6 @@ namespace YAF.TranslateApp
             this.btnAutoTranslate.Enabled = true;
         }
 
-
         /// <summary>
         /// Creates and populates the translation controls given source and destination file names.
         /// </summary>
@@ -436,9 +411,6 @@ namespace YAF.TranslateApp
         {
             try
             {
-                new StringBuilder();
-                new StringBuilder();
-
                 var docSrc = new XmlDocument();
                 var docDst = new XmlDocument();
 
@@ -471,8 +443,6 @@ namespace YAF.TranslateApp
                         {
                             continue;
                         }
-
-                        this.sLangCodeSrc = navSrc.Value;
                     }
                     while (navSrc.MoveToNextAttribute());
                 }
@@ -484,11 +454,6 @@ namespace YAF.TranslateApp
                 {
                     do
                     {
-                        if (navDst.Name.Equals("code"))
-                        {
-                            this.sLangCodeDest = navDst.Value;
-                        }
-
                         this.ResourcesAttributes.Add(navDst.Name, navDst.Value);
                     }
                     while (navDst.MoveToNextAttribute());
@@ -524,8 +489,7 @@ namespace YAF.TranslateApp
                         var resourceTagAttributeValue = resourceItem.GetAttribute("tag", string.Empty);
 
                         var iteratorSe = navDst.Select(
-                            "/Resources/page[@name=\"" + pageNameAttributeValue + "\"]/Resource[@tag=\""
-                            + resourceTagAttributeValue + "\"]");
+                            $"/Resources/page[@name=\"{pageNameAttributeValue}\"]/Resource[@tag=\"{resourceTagAttributeValue}\"]");
 
                         if (iteratorSe.Count <= 0)
                         {
@@ -568,22 +532,21 @@ namespace YAF.TranslateApp
                 this.grid1.Columns.StretchToFit();
 
                 // Show Info
-                this.toolStripStatusLabel1.Text = string.Format(
-                    "Total Resources: {0}; Resources Not Translated: {1}",
-                    totalResourceCount,
-                    resourcesNotTranslated);
+                this.toolStripStatusLabel1.Text =
+                    $"Total Resources: {totalResourceCount}; Resources Not Translated: {resourcesNotTranslated}";
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error loading files. " + ex.Message, "Error", MessageBoxButtons.OK);
+                MessageBox.Show($"Error loading files. {ex.Message}", "Error", MessageBoxButtons.OK);
             }
         }
-
 
         /// <summary>
         /// Creates a header row in the TableLayoutPanel. Header text is page section name in XML file.
         /// </summary>
-        /// <param name="pageName"></param>
+        /// <param name="pageName">
+        /// The page Name.
+        /// </param>
         private void CreatePageResourceHeader(string pageName)
         {
             var pageHeader = new Cell
@@ -609,7 +572,6 @@ namespace YAF.TranslateApp
             this.RowCount++;
         }
 
-
         /// <summary>
         /// Creates controls for column 1 (Resource tag) and column 2 (Resource value).
         /// </summary>
@@ -632,20 +594,16 @@ namespace YAF.TranslateApp
             {
                 var height = 60 * (tbx.Control.Text.Length / 60);
                 tbx.Control.Height = height;
-
             }
-
 
             var translation = new Translation
                                   {
                                       PageName = pageName,
                                       ResourceName = resourceName,
-                                      ResourceValue = srcResourceValue,
                                       LocalizedValue = dstResourceValue
                                   };
 
             this.translations.Add(translation);
-
 
             if (srcResourceValue.Equals(dstResourceValue, StringComparison.OrdinalIgnoreCase))
             {
@@ -682,7 +640,6 @@ namespace YAF.TranslateApp
                                       resourceName = resourceName,
                                       srcResourceValue = srcResourceValue
                                   };
-
 
             var cellResourceValue = new Cell
                                         {
@@ -722,8 +679,6 @@ namespace YAF.TranslateApp
                     new SourceGrid.Cells.Cell(tbx.Control.Text) { View = this.cellLocalResource, Editor = tbx };
             }
 
-
-
             if (tbx.Control.Text.Length > 30)
             {
                 var height = 60 * (tbx.Control.Text.Length / 60);
@@ -738,7 +693,7 @@ namespace YAF.TranslateApp
         /// Save translations back to original file.
         /// </summary>
         /// <returns></returns>
-        private bool SaveTransalation()
+        private bool SaveTranslation()
         {
             var result = true;
 
@@ -757,8 +712,6 @@ namespace YAF.TranslateApp
 
             try
             {
-                var xmlDocument = new XmlDocument();
-
                 var xwSettings = new XmlWriterSettings
                                      {
                                          Encoding = Encoding.UTF8,
@@ -766,7 +719,6 @@ namespace YAF.TranslateApp
                                          Indent = true,
                                          IndentChars = "\t"
                                      };
-
 
                 var xw = XmlWriter.Create(this.tbxDestinationTranslationFile.Text, xwSettings);
                 xw.WriteStartDocument();
@@ -786,7 +738,6 @@ namespace YAF.TranslateApp
 
                 var currentPageName = string.Empty;
 
-
                 foreach (var trans in this.translations)
                 {
                     // <page></page>
@@ -801,7 +752,6 @@ namespace YAF.TranslateApp
 
                         xw.WriteStartElement("page");
                         xw.WriteAttributeString("name", currentPageName);
-
                     }
 
                     xw.WriteStartElement("Resource");
@@ -826,7 +776,7 @@ namespace YAF.TranslateApp
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error saving destination translation: " + ex.Message, "Error", MessageBoxButtons.OK);
+                MessageBox.Show($"Error saving destination translation: {ex.Message}", "Error", MessageBoxButtons.OK);
 
                 result = false;
             }
@@ -834,7 +784,6 @@ namespace YAF.TranslateApp
             this.Cursor = Cursors.Default;
 
             return result;
-
         }
 
         /// <summary>
@@ -843,7 +792,7 @@ namespace YAF.TranslateApp
         /// <typeparam name="T"></typeparam>
         /// <param name="list"></param>
         /// <returns>The Cleaned List</returns>
-        public static List<T> RemoveDuplicateSections<T>(List<T> list)
+        private static List<T> RemoveDuplicateSections<T>(List<T> list)
             where T : Translation
         {
             var finalList = new List<T>();
@@ -867,7 +816,12 @@ namespace YAF.TranslateApp
         /// <summary>
         /// Show open file dialog and return single filename
         /// </summary>
-        /// <returns></returns>
+        /// <param name="sTitle">
+        /// The s Title.
+        /// </param>
+        /// <param name="sFileName">
+        /// The s File Name.
+        /// </param>
         private static string GetTranslationFileName(string sTitle, string sFileName)
         {
             string result = null;
@@ -906,7 +860,6 @@ namespace YAF.TranslateApp
             {
                 this.PopulateTranslations(this.tbxSourceTranslationFile.Text, this.tbxDestinationTranslationFile.Text);
             }
-
         }
 
         #endregion

@@ -1,5 +1,5 @@
 /* Yet Another Forum.NET
- * Copyright (C) 2003-2005 BjÃ¸rnar Henden
+ * Copyright (C) 2003-2005 Bjørnar Henden
  * Copyright (C) 2006-2013 Jaben Cargman
  * Copyright (C) 2014-2021 Ingo Herbote
  * https://www.yetanotherforum.net/
@@ -24,23 +24,16 @@
 
 namespace YAF.TranslateApp
 {
-    using System;
-    using System.Windows.Forms;
-
     /// <summary>
-    /// The program.
+    /// The translate form.
     /// </summary>
-    public static class Program
+    public partial class TranslateForm
     {
         /// <summary>
-        /// The main entry point for the application.
+        /// The text box translation.
         /// </summary>
-        [STAThread]
-        public static void Main()
+        private partial class TextBoxTranslation
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new TranslateForm());
         }
     }
 }
