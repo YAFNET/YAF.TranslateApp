@@ -11,8 +11,8 @@
     <Description>Release Build</Description>
     <Copyright>Copyright © Yet Another Forum.NET</Copyright>
     <Deterministic>false</Deterministic>
-    <AssemblyVersion>1.2.0.*</AssemblyVersion>
-    <FileVersion>1.2.0</FileVersion>
+    <AssemblyVersion>1.2.1.*</AssemblyVersion>
+    <FileVersion>1.2.1</FileVersion>
     <OutputPath>bin\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">

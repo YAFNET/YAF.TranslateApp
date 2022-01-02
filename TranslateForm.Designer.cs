@@ -58,7 +58,7 @@ namespace YAF.TranslateApp
             this.btnQuit.TabIndex = 0;
             this.btnQuit.Text = "&Quit";
             this.btnQuit.UseVisualStyleBackColor = true;
-            this.btnQuit.Click += new System.EventHandler(this.BtnQuitClick);
+            this.btnQuit.Click += new System.EventHandler(this.QuitClick);
             // 
             // btnSave
             // 
@@ -70,7 +70,7 @@ namespace YAF.TranslateApp
             this.btnSave.TabIndex = 3;
             this.btnSave.Text = "Save Language";
             this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.BtnSaveClick);
+            this.btnSave.Click += new System.EventHandler(this.SaveClick);
             // 
             // lblSourceTranslationFile
             // 
@@ -119,7 +119,7 @@ namespace YAF.TranslateApp
             this.btnLoadSourceTranslation.TabIndex = 8;
             this.btnLoadSourceTranslation.Text = "Select source translation...";
             this.btnLoadSourceTranslation.UseVisualStyleBackColor = true;
-            this.btnLoadSourceTranslation.Click += new System.EventHandler(this.BtnLoadSourceTranslationClick);
+            this.btnLoadSourceTranslation.Click += new System.EventHandler(this.LoadSourceTranslationClick);
             // 
             // btnLoadDestinationTranslation
             // 
@@ -130,7 +130,7 @@ namespace YAF.TranslateApp
             this.btnLoadDestinationTranslation.TabIndex = 9;
             this.btnLoadDestinationTranslation.Text = "Select destination translation...";
             this.btnLoadDestinationTranslation.UseVisualStyleBackColor = true;
-            this.btnLoadDestinationTranslation.Click += new System.EventHandler(this.BtnLoadDestinationTranslationClick);
+            this.btnLoadDestinationTranslation.Click += new System.EventHandler(this.LoadDestinationTranslationClick);
             // 
             // label1
             // 
@@ -178,7 +178,7 @@ namespace YAF.TranslateApp
             this.btnPopulateTranslations.TabIndex = 13;
             this.btnPopulateTranslations.Text = "Populate translation";
             this.btnPopulateTranslations.UseVisualStyleBackColor = true;
-            this.btnPopulateTranslations.Click += new System.EventHandler(this.BtnPopulateTranslationsClick);
+            this.btnPopulateTranslations.Click += new System.EventHandler(this.PopulateTranslationsClick);
             // 
             // statusStrip1
             // 
@@ -234,7 +234,7 @@ namespace YAF.TranslateApp
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(896, 711);
             this.Name = "TranslateForm";
-            this.Text = "YAF Translation 1.20";
+            this.Text = "YAF Translation 1.21";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TranslateFormFormClosing);
             this.Load += new System.EventHandler(this.TranslateForm_Load);
             this.panel1.ResumeLayout(false);

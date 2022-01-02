@@ -1,9 +1,9 @@
 /* Yet Another Forum.NET
  * Copyright (C) 2003-2005 Bjørnar Henden
  * Copyright (C) 2006-2013 Jaben Cargman
- * Copyright (C) 2014-2021 Ingo Herbote
+ * Copyright (C) 2014-2022 Ingo Herbote
  * https://www.yetanotherforum.net/
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -46,68 +46,30 @@ namespace YAF.TranslateApp
     /// </summary>
     public partial class TranslateForm : Form
     {
-        #region Private instance variables
+        /// <summary>
+        /// The cell local resource.
+        /// </summary>
+        private readonly Cell cellLocalResource;
+
+        /// <summary>
+        /// The cell local resource red.
+        /// </summary>
+        private readonly Cell cellLocalResourceRed;
 
         /// <summary>
         /// The translations.
         /// </summary>
         private List<Translation> translations = new List<Translation>();
 
-        private int RowCount;
-
-        #endregion
-
-        #region Properties
-
         /// <summary>
-        /// Gets the Header separator row font style
+        /// The row count
         /// </summary>
-        private Font PageHeaderFont { get; } = new Font(SystemFonts.DefaultFont, FontStyle.Bold);
-
-        /// <summary>
-        /// Gets the Column 1 (Resource tag) font style
-        /// </summary>
-        private Font ResourceHeaderFont { get; } = new Font(SystemFonts.DefaultFont, FontStyle.Bold);
-
-        /// <summary>
-        /// Destination file changed flag
-        /// </summary>
-        private bool DestinationTranslationFileChanged { get; set; }
-
-        // List of namespaces for <Resources> in destination translation file
-        private StringDictionary ResourcesNamespaces { get; } = new StringDictionary();
-
-        // List of attributes for <Resources> in destination translation file
-        private StringDictionary ResourcesAttributes { get; } = new StringDictionary();
-
-        private readonly Cell cellLocalResource;
-
-        private readonly Cell cellLocalResourceRed;
-
-        #endregion
-
-        #region Classes
-
-        /// <summary>
-        /// Support class for TextBox.Tag property value
-        /// </summary>
-        private partial class TextBoxTranslation
-        {
-            public string pageName;
-
-            public string resourceName;
-
-            public string srcResourceValue;
-
-            // public string dstResourceValue;
-        }
-
-        #endregion
+        private int rowCount;
 
         #region Constructor
 
         /// <summary>
-        /// Default generated
+        /// Initializes a new instance of the <see cref="TranslateForm"/> class.
         /// </summary>
         public TranslateForm()
         {
@@ -132,16 +94,37 @@ namespace YAF.TranslateApp
             this.InitializeComponent();
         }
 
-        #endregion
+        #endregion;
 
-        #region Events
+        /// <summary>
+        /// Gets the Header separator row font style
+        /// </summary>
+        private Font PageHeaderFont { get; } = new Font(SystemFonts.DefaultFont, FontStyle.Bold);
+
+        /// <summary>
+        /// Gets the Column 1 (Resource tag) font style
+        /// </summary>
+        private Font ResourceHeaderFont { get; } = new Font(SystemFonts.DefaultFont, FontStyle.Bold);
+
+        /// <summary>Gets or sets a value indicating whether [destination translation file changed].</summary>
+        private bool DestinationTranslationFileChanged { get; set; }
+
+        /// <summary>
+        /// Gets the List of namespaces for Resources in destination translation file
+        /// </summary>
+        private StringDictionary ResourcesNamespaces { get; } = new StringDictionary();
+
+        /// <summary>
+        /// Gets the List of attributes for Resources in destination translation file
+        /// </summary>
+        private StringDictionary ResourcesAttributes { get; } = new StringDictionary();
 
         /// <summary>
         /// Populate translation tables
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        void BtnPopulateTranslationsClick(object sender, EventArgs e)
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
+        protected void PopulateTranslationsClick(object sender, EventArgs e)
         {
             this.PopulateTranslations(this.tbxSourceTranslationFile.Text, this.tbxDestinationTranslationFile.Text);
         }
@@ -149,9 +132,9 @@ namespace YAF.TranslateApp
         /// <summary>
         /// Load source translation
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        void BtnLoadSourceTranslationClick(object sender, EventArgs e)
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
+        protected void LoadSourceTranslationClick(object sender, EventArgs e)
         {
             var fileName = GetTranslationFileName("Select a File as Source Translation", "english.xml");
 
@@ -174,7 +157,10 @@ namespace YAF.TranslateApp
             }
 
             if (string.IsNullOrEmpty(this.tbxSourceTranslationFile.Text)
-                || string.IsNullOrEmpty(this.tbxDestinationTranslationFile.Text)) return;
+                || string.IsNullOrEmpty(this.tbxDestinationTranslationFile.Text))
+            {
+                return;
+            }
 
             this.btnPopulateTranslations.Enabled = true;
 
@@ -184,9 +170,9 @@ namespace YAF.TranslateApp
         /// <summary>
         /// Load destination, target, translation
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        void BtnLoadDestinationTranslationClick(object sender, EventArgs e)
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
+        protected void LoadDestinationTranslationClick(object sender, EventArgs e)
         {
             var fileName = GetTranslationFileName("Select the Language File you want to Translate", null);
 
@@ -209,9 +195,9 @@ namespace YAF.TranslateApp
         /// <summary>
         /// Exit application
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        void BtnQuitClick(object sender, EventArgs e)
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
+        protected void QuitClick(object sender, EventArgs e)
         {
             this.Close();
         }
@@ -219,9 +205,9 @@ namespace YAF.TranslateApp
         /// <summary>
         /// Save translation
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        void BtnSaveClick(object sender, EventArgs e)
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
+        protected void SaveClick(object sender, EventArgs e)
         {
             this.DestinationTranslationFileChanged = false;
             this.SaveTranslation();
@@ -230,16 +216,16 @@ namespace YAF.TranslateApp
         /// <summary>
         /// Check if translation changed and ask to save if changed
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        void TranslateFormFormClosing(object sender, FormClosingEventArgs e)
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
+        protected void TranslateFormFormClosing(object sender, FormClosingEventArgs e)
         {
             if (!this.DestinationTranslationFileChanged)
             {
                 return;
             }
 
-            switch (MessageBox.Show("Save changes before exiting?", "Save", MessageBoxButtons.YesNoCancel))
+            switch (MessageBox.Show(Resources.Save_Changes, Resources.Save, MessageBoxButtons.YesNoCancel))
             {
                 case DialogResult.Cancel:
                     e.Cancel = true;
@@ -253,17 +239,22 @@ namespace YAF.TranslateApp
                     }
 
                     break;
+                case DialogResult.None:
+                case DialogResult.OK:
+                case DialogResult.Abort:
+                case DialogResult.Retry:
+                case DialogResult.Ignore:
                 default:
                     break;
             }
         }
 
         /// <summary>
-        /// Set flag that transaltion has changed
+        /// Set flag that translation has changed
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        void TbxTextChanged(object sender, EventArgs e)
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
+        protected void TextChangedEvent(object sender, EventArgs e)
         {
             this.btnSave.Enabled = true;
         }
@@ -271,14 +262,13 @@ namespace YAF.TranslateApp
         /// <summary>
         /// Auto Translate The Selected Resource via Google Translator
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        void MenuItemClick(object sender, EventArgs e)
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
+        protected void MenuItemClick(object sender, EventArgs e)
         {
             var menuItem = (MenuItem)sender;
 
             var contextMenu = (ContextMenu)menuItem.Parent;
-
 
             var tbx = (TextBox)contextMenu.SourceControl;
             var tbt = (TextBoxTranslation)tbx.Tag;
@@ -291,14 +281,14 @@ namespace YAF.TranslateApp
                               where cell != null
                               select t)
             {
-                GetCell(this.grid1, t).View = tbt.srcResourceValue.Equals(tbx.Text, StringComparison.OrdinalIgnoreCase)
+                GetCell(this.grid1, t).View = tbt.SrcResourceValue.Equals(tbx.Text, StringComparison.OrdinalIgnoreCase)
                                                   ? this.cellLocalResourceRed
                                                   : this.cellLocalResource;
             }
 
             // Update Translations List
             this.translations
-                .Find(check => check.PageName.Equals(tbt.pageName) && check.ResourceName.Equals(tbt.resourceName))
+                .Find(check => check.PageName.Equals(tbt.PageName) && check.ResourceName.Equals(tbt.ResourceName))
                 .LocalizedValue = tbx.Text;
 
             // tlpTranslations.Focus();
@@ -307,15 +297,14 @@ namespace YAF.TranslateApp
         /// <summary>
         /// Compare source and destination values on focus lost and indicate (guess) whether text is translated or not
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        void TbxLostFocus(object sender, EventArgs e)
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
+        protected void TbxLostFocus(object sender, EventArgs e)
         {
             var tbx = (TextBox)sender;
             var tbt = (TextBoxTranslation)tbx.Tag;
 
-
-            tbx.ForeColor = tbt.srcResourceValue.Equals(tbx.Text, StringComparison.OrdinalIgnoreCase)
+            tbx.ForeColor = tbt.SrcResourceValue.Equals(tbx.Text, StringComparison.OrdinalIgnoreCase)
                                 ? Color.Red
                                 : Color.Black;
 
@@ -327,14 +316,14 @@ namespace YAF.TranslateApp
                               where cell != null
                               select t)
             {
-                GetCell(this.grid1, t).View = tbt.srcResourceValue.Equals(tbx.Text, StringComparison.OrdinalIgnoreCase)
+                GetCell(this.grid1, t).View = tbt.SrcResourceValue.Equals(tbx.Text, StringComparison.OrdinalIgnoreCase)
                                                   ? this.cellLocalResourceRed
                                                   : this.cellLocalResource;
             }
 
             // Update Translations List
             this.translations
-                .Find(check => check.PageName.Equals(tbt.pageName) && check.ResourceName.Equals(tbt.resourceName))
+                .Find(check => check.PageName.Equals(tbt.PageName) && check.ResourceName.Equals(tbt.ResourceName))
                 .LocalizedValue = tbx.Text;
 
             // tlpTranslations.Focus();
@@ -343,28 +332,84 @@ namespace YAF.TranslateApp
         /// <summary>
         /// cast cell on position pos to Cell
         /// </summary>
-        /// <param name="grid"></param>
-        /// <param name="pos"></param>
-        /// <returns></returns>
+        /// <param name="grid">The grid.</param>
+        /// <param name="pos">The position.</param>
+        /// <returns>Returns Cell.</returns>
         private static SourceGrid.Cells.Cell GetCell(GridVirtual grid, Position pos)
         {
             return grid.GetCell(pos) as SourceGrid.Cells.Cell;
         }
 
-        #endregion
+        /// <summary>
+        /// Remove all Resources with the same Name and Page
+        /// </summary>
+        /// <typeparam name="T">The Typed Parameter</typeparam>
+        /// <param name="list">The list.</param>
+        /// <returns>Returns the Cleaned List.</returns>
+        private static List<T> RemoveDuplicateSections<T>(IEnumerable<T> list)
+            where T : Translation
+        {
+            var finalList = new List<T>();
 
-        #region Methods
+            foreach (var item1 in list.Where(
+                         item1 => finalList.Find(
+                                      check => check.PageName.Equals(item1.PageName)
+                                               && check.ResourceName.Equals(item1.ResourceName)) == null))
+            {
+                finalList.Add(item1);
+            }
+
+            return finalList;
+        }
+
+        /// <summary>
+        /// Show open file dialog and return single filename
+        /// </summary>
+        /// <param name="title">
+        /// The title.
+        /// </param>
+        /// <param name="fileName">
+        /// The File Name.
+        /// </param>
+        /// <returns>
+        /// The <see cref="string"/>.
+        /// </returns>
+        private static string GetTranslationFileName(string title, string fileName)
+        {
+            string result = null;
+
+            var ofd = new OpenFileDialog
+                          {
+                              CheckFileExists = true,
+                              CheckPathExists = true,
+                              Multiselect = false,
+                              Filter = Resources.XmlFilter,
+                              Title = title,
+                              FileName = fileName
+                          };
+
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                result = ofd.FileName;
+            }
+
+            return result;
+        }
 
         /// <summary>
         /// Wraps creation of translation controls.
         /// </summary>
-        /// <param name="srcFile"></param>
-        /// <param name="dstFile"></param>
+        /// <param name="srcFile">
+        /// The source File.
+        /// </param>
+        /// <param name="dstFile">
+        /// The destination File.
+        /// </param>
         private void PopulateTranslations(string srcFile, string dstFile)
         {
             this.Cursor = Cursors.WaitCursor;
 
-            this.RowCount = 0;
+            this.rowCount = 0;
 
             this.grid1.Rows.Clear();
             this.grid1.Columns.Clear();
@@ -405,8 +450,12 @@ namespace YAF.TranslateApp
         /// <summary>
         /// Creates and populates the translation controls given source and destination file names.
         /// </summary>
-        /// <param name="srcFile"></param>
-        /// <param name="dstFile"></param>
+        /// <param name="srcFile">
+        /// The source File.
+        /// </param>
+        /// <param name="dstFile">
+        /// The destination File.
+        /// </param>
         private void CreateTranslateControls(string srcFile, string dstFile)
         {
             try
@@ -533,11 +582,11 @@ namespace YAF.TranslateApp
 
                 // Show Info
                 this.toolStripStatusLabel1.Text =
-                    $"Total Resources: {totalResourceCount}; Resources Not Translated: {resourcesNotTranslated}";
+                    string.Format(Resources.TotalResources, totalResourceCount, resourcesNotTranslated);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error loading files. {ex.Message}", "Error", MessageBoxButtons.OK);
+                MessageBox.Show(string.Format(Resources.ErrorLoading, ex.Message), Resources.Error, MessageBoxButtons.OK);
             }
         }
 
@@ -556,29 +605,37 @@ namespace YAF.TranslateApp
                                      TextAlignment = DevAge.Drawing.ContentAlignment.MiddleLeft,
                                  };
 
-            this.grid1.Rows.Insert(this.RowCount);
+            this.grid1.Rows.Insert(this.rowCount);
 
-            this.grid1[this.RowCount, 0] = new SourceGrid.Cells.Cell(pageName) { View = pageHeader, ColumnSpan = 3 };
-            this.grid1[this.RowCount, 1].AddController(new SourceGrid.Cells.Controllers.Unselectable());
-            this.grid1.Rows[this.RowCount].Height = 50;
+            this.grid1[this.rowCount, 0] = new SourceGrid.Cells.Cell(pageName) { View = pageHeader, ColumnSpan = 3 };
+            this.grid1[this.rowCount, 1].AddController(new SourceGrid.Cells.Controllers.Unselectable());
+            this.grid1.Rows[this.rowCount].Height = 50;
 
-            this.RowCount++;
+            this.rowCount++;
 
-            this.grid1.Rows.Insert(this.RowCount);
-            this.grid1[this.RowCount, 0] = new SourceGrid.Cells.ColumnHeader("Original Resource");
-            this.grid1[this.RowCount, 1] = new SourceGrid.Cells.ColumnHeader("Resource Name");
-            this.grid1[this.RowCount, 2] = new SourceGrid.Cells.ColumnHeader("Localized Resource");
+            this.grid1.Rows.Insert(this.rowCount);
+            this.grid1[this.rowCount, 0] = new SourceGrid.Cells.ColumnHeader("Original Resource");
+            this.grid1[this.rowCount, 1] = new SourceGrid.Cells.ColumnHeader("Resource Name");
+            this.grid1[this.rowCount, 2] = new SourceGrid.Cells.ColumnHeader("Localized Resource");
 
-            this.RowCount++;
+            this.rowCount++;
         }
 
         /// <summary>
         /// Creates controls for column 1 (Resource tag) and column 2 (Resource value).
         /// </summary>
-        /// <param name="pageName"></param>
-        /// <param name="resourceName"></param>
-        /// <param name="srcResourceValue"></param>
-        /// <param name="dstResourceValue"></param>
+        /// <param name="pageName">
+        /// The page Name.
+        /// </param>
+        /// <param name="resourceName">
+        /// The resource Name.
+        /// </param>
+        /// <param name="srcResourceValue">
+        /// The source Resource Value.
+        /// </param>
+        /// <param name="dstResourceValue">
+        /// The destination Resource Value.
+        /// </param>
         private void CreatePageResourceControl(
             string pageName,
             string resourceName,
@@ -619,9 +676,9 @@ namespace YAF.TranslateApp
             }
 
             tbx.Control.LostFocus += this.TbxLostFocus;
-            tbx.Control.TextChanged += this.TbxTextChanged;
+            tbx.Control.TextChanged += this.TextChangedEvent;
 
-            var menuItem = new MenuItem { Text = "Auto Translate" };
+            var menuItem = new MenuItem { Text = Resources.AutoTranslate };
 
             menuItem.Click += this.MenuItemClick;
 
@@ -636,9 +693,9 @@ namespace YAF.TranslateApp
 
             tbx.Control.Tag = new TextBoxTranslation
                                   {
-                                      pageName = pageName,
-                                      resourceName = resourceName,
-                                      srcResourceValue = srcResourceValue
+                                      PageName = pageName,
+                                      ResourceName = resourceName,
+                                      SrcResourceValue = srcResourceValue
                                   };
 
             var cellResourceValue = new Cell
@@ -659,23 +716,23 @@ namespace YAF.TranslateApp
                                            BackColor = Color.LightGray
                                        };
 
-            this.grid1.Rows.Insert(this.RowCount);
-            this.grid1[this.RowCount, 0] =
+            this.grid1.Rows.Insert(this.rowCount);
+            this.grid1[this.rowCount, 0] =
                 new SourceGrid.Cells.Cell(srcResourceValue, typeof(string)) { View = cellResourceValue };
-            this.grid1[this.RowCount, 0].AddController(new SourceGrid.Cells.Controllers.Unselectable());
+            this.grid1[this.rowCount, 0].AddController(new SourceGrid.Cells.Controllers.Unselectable());
 
-            this.grid1[this.RowCount, 1] =
+            this.grid1[this.rowCount, 1] =
                 new SourceGrid.Cells.Cell(resourceName, typeof(string)) { View = cellResourceName };
-            this.grid1[this.RowCount, 1].AddController(new SourceGrid.Cells.Controllers.Unselectable());
+            this.grid1[this.rowCount, 1].AddController(new SourceGrid.Cells.Controllers.Unselectable());
 
             if (tbx.Control.ForeColor.Equals(Color.Red))
             {
-                this.grid1[this.RowCount, 2] =
+                this.grid1[this.rowCount, 2] =
                     new SourceGrid.Cells.Cell(tbx.Control.Text) { View = this.cellLocalResourceRed, Editor = tbx };
             }
             else
             {
-                this.grid1[this.RowCount, 2] =
+                this.grid1[this.rowCount, 2] =
                     new SourceGrid.Cells.Cell(tbx.Control.Text) { View = this.cellLocalResource, Editor = tbx };
             }
 
@@ -683,16 +740,18 @@ namespace YAF.TranslateApp
             {
                 var height = 60 * (tbx.Control.Text.Length / 60);
 
-                this.grid1.Rows[this.RowCount].Height = height;
+                this.grid1.Rows[this.rowCount].Height = height;
             }
 
-            this.RowCount++;
+            this.rowCount++;
         }
 
         /// <summary>
         /// Save translations back to original file.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        /// The <see cref="bool"/>.
+        /// </returns>
         private bool SaveTranslation()
         {
             var result = true;
@@ -712,7 +771,7 @@ namespace YAF.TranslateApp
 
             try
             {
-                var xwSettings = new XmlWriterSettings
+                var settings = new XmlWriterSettings
                                      {
                                          Encoding = Encoding.UTF8,
                                          OmitXmlDeclaration = false,
@@ -720,7 +779,7 @@ namespace YAF.TranslateApp
                                          IndentChars = "\t"
                                      };
 
-                var xw = XmlWriter.Create(this.tbxDestinationTranslationFile.Text, xwSettings);
+                var xw = XmlWriter.Create(this.tbxDestinationTranslationFile.Text, settings);
                 xw.WriteStartDocument();
 
                 // <Resources>
@@ -776,7 +835,7 @@ namespace YAF.TranslateApp
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error saving destination translation: {ex.Message}", "Error", MessageBoxButtons.OK);
+                MessageBox.Show(string.Format(Resources.ErrorSaveDestination, ex.Message), Resources.Error, MessageBoxButtons.OK);
 
                 result = false;
             }
@@ -787,68 +846,10 @@ namespace YAF.TranslateApp
         }
 
         /// <summary>
-        /// Remove all Resources with the same Name and Page
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="list"></param>
-        /// <returns>The Cleaned List</returns>
-        private static List<T> RemoveDuplicateSections<T>(List<T> list)
-            where T : Translation
-        {
-            var finalList = new List<T>();
-
-            /*foreach (T item1 in
-                list.Where(item1 => finalList.Find(check => check.sPageName.Equals(item1.sPageName) && check.sResourceName.Equals(item1.sResourceName) && check.sResourceValue.Equals(item1.sResourceValue) && check.sLocalizedValue.Equals(item1.sLocalizedValue)) == null))
-            {
-                finalList.Add(item1);
-            }*/
-            foreach (var item1 in list.Where(
-                item1 => finalList.Find(
-                             check => check.PageName.Equals(item1.PageName)
-                                      && check.ResourceName.Equals(item1.ResourceName)) == null))
-            {
-                finalList.Add(item1);
-            }
-
-            return finalList;
-        }
-
-        /// <summary>
-        /// Show open file dialog and return single filename
-        /// </summary>
-        /// <param name="sTitle">
-        /// The s Title.
-        /// </param>
-        /// <param name="sFileName">
-        /// The s File Name.
-        /// </param>
-        private static string GetTranslationFileName(string sTitle, string sFileName)
-        {
-            string result = null;
-
-            var ofd = new OpenFileDialog
-                          {
-                              CheckFileExists = true,
-                              CheckPathExists = true,
-                              Multiselect = false,
-                              Filter = "XML files (*.xml)|*.xml",
-                              Title = sTitle,
-                              FileName = sFileName
-                          };
-
-            if (ofd.ShowDialog() == DialogResult.OK)
-            {
-                result = ofd.FileName;
-            }
-
-            return result;
-        }
-
-        /// <summary>
         /// Shows only Pending Translations or all
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void CheckPendingOnlyCheckedChanged(object sender, EventArgs e)
         {
             Settings.Default.ShowPendingOnly = this.checkPendingOnly.Checked;
@@ -861,8 +862,6 @@ namespace YAF.TranslateApp
                 this.PopulateTranslations(this.tbxSourceTranslationFile.Text, this.tbxDestinationTranslationFile.Text);
             }
         }
-
-        #endregion
 
         /// <summary>
         /// Handles the Load event of the TranslateForm control.

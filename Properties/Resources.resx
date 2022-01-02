@@ -114,4 +114,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Save_Changes" xml:space="preserve">
+	  <value>Save changes before exiting?</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+	  <value>Save</value>
+  </data>
+  <data name="TotalResources" xml:space="preserve">
+	  <value>Total Resources: {0}; Resources Not Translated: {1}</value>
+  </data>
+  <data name="ErrorLoading" xml:space="preserve">
+	  <value>Error loading files. {0}</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+	  <value>Error</value>
+  </data>
+  <data name="XmlFilter" xml:space="preserve">
+	  <value>XML files (*.xml)|*.xml</value>
+  </data>
+  <data name="AutoTranslate" xml:space="preserve">
+	  <value>Auto Translate</value>
+  </data>
+  <data name="ErrorSaveDestination" xml:space="preserve">
+	  <value>Error saving destination translation: {0}</value>
+  </data>
 </root>

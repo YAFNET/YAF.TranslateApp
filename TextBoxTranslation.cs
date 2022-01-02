@@ -1,9 +1,9 @@
 /* Yet Another Forum.NET
  * Copyright (C) 2003-2005 Bjørnar Henden
  * Copyright (C) 2006-2013 Jaben Cargman
- * Copyright (C) 2014-2021 Ingo Herbote
+ * Copyright (C) 2014-2022 Ingo Herbote
  * https://www.yetanotherforum.net/
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -32,8 +32,29 @@ namespace YAF.TranslateApp
         /// <summary>
         /// The text box translation.
         /// </summary>
-        private partial class TextBoxTranslation
+        public partial class TextBoxTranslation
         {
+        }
+
+        /// <summary>
+        /// Support class for TextBox.Tag property value
+        /// </summary>
+        public partial class TextBoxTranslation
+        {
+            /// <summary>
+            /// Gets or sets the page name.
+            /// </summary>
+            public string PageName { get; set; }
+
+            /// <summary>
+            /// Gets or sets the resource name.
+            /// </summary>
+            public string ResourceName { get; set; }
+
+            /// <summary>
+            /// Gets or sets the Source resource value.
+            /// </summary>
+            public string SrcResourceValue { get; set; }
         }
     }
 }
