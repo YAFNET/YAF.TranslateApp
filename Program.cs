@@ -22,25 +22,21 @@
  * under the License.
  */
 
-namespace YAF.TranslateApp
-{
-    using System;
-    using System.Windows.Forms;
+namespace YAF.TranslateApp;
 
+/// <summary>
+/// The program.
+/// </summary>
+public static class Program
+{
     /// <summary>
-    /// The program.
+    /// The main entry point for the application.
     /// </summary>
-    public static class Program
+    [STAThread]
+    public static void Main()
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        [STAThread]
-        public static void Main()
-        {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new TranslateForm());
-        }
+        Application.EnableVisualStyles();
+        Application.SetCompatibleTextRenderingDefault(false);
+        Application.Run(new TranslateForm());
     }
 }

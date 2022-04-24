@@ -22,39 +22,38 @@
  * under the License.
  */
 
-namespace YAF.TranslateApp
+namespace YAF.TranslateApp;
+
+/// <summary>
+/// The translate form.
+/// </summary>
+public partial class TranslateForm
 {
     /// <summary>
-    /// The translate form.
+    /// The text box translation.
     /// </summary>
-    public partial class TranslateForm
+    public partial class TextBoxTranslation
+    {
+    }
+
+    /// <summary>
+    /// Support class for TextBox.Tag property value
+    /// </summary>
+    public partial class TextBoxTranslation
     {
         /// <summary>
-        /// The text box translation.
+        /// Gets or sets the page name.
         /// </summary>
-        public partial class TextBoxTranslation
-        {
-        }
+        public string PageName { get; set; }
 
         /// <summary>
-        /// Support class for TextBox.Tag property value
+        /// Gets or sets the resource name.
         /// </summary>
-        public partial class TextBoxTranslation
-        {
-            /// <summary>
-            /// Gets or sets the page name.
-            /// </summary>
-            public string PageName { get; set; }
+        public string ResourceName { get; set; }
 
-            /// <summary>
-            /// Gets or sets the resource name.
-            /// </summary>
-            public string ResourceName { get; set; }
-
-            /// <summary>
-            /// Gets or sets the Source resource value.
-            /// </summary>
-            public string SrcResourceValue { get; set; }
-        }
+        /// <summary>
+        /// Gets or sets the Source resource value.
+        /// </summary>
+        public string SrcResourceValue { get; set; }
     }
 }
